@@ -4,6 +4,7 @@ const app = express()
 const cors = require('cors')
 
 app.use(express.json())
+app.use(express.static('build'))
 app.use(cors())
 
 morgan.token('body', (req, res) => JSON.stringify(req.body));
@@ -37,9 +38,9 @@ const makeId = () => {
 }
 
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello World!</h1>')
-})
+// app.get('/', (req, res) => {
+//   res.send('<h1>Hello World!</h1>')
+// })
 
 app.get('/api/persons', (req, res) => {
     res.json(persons)
