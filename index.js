@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
@@ -49,7 +51,7 @@ app.get('/api/persons/:id', (req, res, next) => {
         res.status(404).end()
       }
     })
-    .catch(error => next(error))  
+    .catch(error => next(error))
 })
 
 //Delete
@@ -62,7 +64,7 @@ app.delete('/api/persons/:id', (req, res, next) => {
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
-  const {name, number} = req.body
+  const { name, number } = req.body
 
   Person.findByIdAndUpdate(req.params.id, req.body, {
     new: false,
@@ -82,7 +84,7 @@ app.post('/api/persons', (req, res, next) => {
   if (body.name === '') {
     next({
       name: 'NoName'
-    }) 
+    })
   } else if (body.number === '') {
     next({
       name : 'NoNumber'
@@ -109,20 +111,20 @@ app.post('/api/persons', (req, res, next) => {
 const unknownEndpoint = (req, res) => {
   res.status(404).send({ error: 'unknown endpoint' })
 }
-  
+
 app.use(unknownEndpoint)
 
 const errorHandler = (error, req, res, next) => {
   console.error(error.message)
 
   if (error.name === 'CastError') {
-    return res.status(400).send({ error: 'malformatted ID'})
+    return res.status(400).send({ error: 'malformatted ID' })
   } else if (error.name === 'NoName') {
-    return res.status(400).send({ error: 'Name missing'})
+    return res.status(400).send({ error: 'Name missing' })
   } else if (error.name === 'NoNumber'){
-    return res.status(400).send({ error: 'Number missing'})
+    return res.status(400).send({ error: 'Number missing' })
   } else if (error.name === 'NotUniqueName'){
-    return res.status(400).send({ error: 'Name already exists'})
+    return res.status(400).send({ error: 'Name already exists' })
   } else if (error.name === 'ValidationError'){
     return res.status(400).json({ error : error.message })
   }

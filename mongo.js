@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const mongoose = require('mongoose')
 
 if (process.argv.length<3) {
@@ -21,7 +22,7 @@ const Person = mongoose.model('Person', personSchema)
 
 const person = new Person({
   name: name,
-  number: number 
+  number: number
 })
 
 if (process.argv.length<4) {
@@ -31,11 +32,11 @@ if (process.argv.length<4) {
     .then(result => {
       result.forEach(person => {
         console.log(person.name, person.number)
-    })
+      })
       mongoose.connection.close()
     })
 } else {
-  person.save().then(result => {
+  person.save().then(() => {
     console.log('added', name, 'number ', number, 'to phonebook' )
     mongoose.connection.close()
   })
